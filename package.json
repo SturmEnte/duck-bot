@@ -9,5 +9,10 @@
 		"test": "nodemon src/main.js"
 	},
 	"author": "SturmEnte",
-	"license": "GPL-3.0-only"
+	"license": "GPL-3.0-only",
+	"dependencies": {
+		"colors": "^1.4.0",
+		"discord.js": "^14.6.0",
+		"dotenv": "^16.0.3"
+	}
 }
