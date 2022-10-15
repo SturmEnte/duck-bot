@@ -6,5 +6,5 @@ module.exports.execute = (interaction) => {
 
 module.exports.command = {
 	name: "ping",
-	description: 'Replies with "Pong"',
+	description: "Replies with Pong",
 };
