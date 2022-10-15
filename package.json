@@ -1,0 +1,13 @@
+{
+	"private": "false",
+	"name": "duck-bot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/main.js",
+	"scripts": {
+		"start": "node src/main.js",
+		"test": "nodemon src/main.js"
+	},
+	"author": "SturmEnte",
+	"license": "GPL-3.0-only"
+}
