@@ -11,9 +11,11 @@ client.on("ready", () => {
 	console.log("Logged in as", client.user.tag.cyan);
 
 	// Register Commands
-	for (let i = 0; i < commands.length; i++) {
-		commands[i].init();
-		client.application.commands.create(commands[i].command);
+	for (const key in commands) {
+		commands[key].init();
+		client.application.commands.create(commands[key].command).then(() => {
+			console.log("Registered", commands[key].command.name.cyan, "command");
+		});
 	}
 });
 
