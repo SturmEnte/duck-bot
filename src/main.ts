@@ -1,9 +1,13 @@
+import { CommandInteraction } from "discord.js";
+
 require("dotenv/config");
 require("colors");
 
 const { Client, InteractionType } = require("discord.js");
 
-const commands = { ping: require("./commands/ping.js") };
+const commands: any = {
+	ping: require("./commands/ping"),
+};
 
 const client = new Client({ intents: ["GuildVoiceStates"] });
 
@@ -19,7 +23,7 @@ client.on("ready", () => {
 	}
 });
 
-client.on("interactionCreate", (interaction) => {
+client.on("interactionCreate", (interaction: CommandInteraction) => {
 	if (interaction.type == InteractionType.ApplicationCommand) {
 		commands[interaction.commandName].execute(interaction);
 	}
