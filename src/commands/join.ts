@@ -4,7 +4,10 @@ import { joinVoiceChannel } from "@discordjs/voice";
 module.exports.init = () => {};
 
 module.exports.execute = async (interaction: CommandInteraction) => {
-	const member = await interaction.guild?.members.fetch(interaction.user.id);
+	const member = await interaction.guild?.members.fetch({
+		user: interaction.user,
+		force: true,
+	});
 
 	if (!interaction.guild) {
 		interaction.reply("The music commands only work in guilds");
@@ -13,7 +16,6 @@ module.exports.execute = async (interaction: CommandInteraction) => {
 
 	if (!member?.voice.channelId) {
 		interaction.reply("You need to be in a channel to use this command");
-		console.log(member?.voice);
 		return;
 	}
 

@@ -1,6 +1,6 @@
 import "colors";
 import "dotenv/config";
-import { Client, GuildMember, Interaction, InteractionType } from "discord.js";
+import { Client, Interaction, InteractionType } from "discord.js";
 
 const commands: any = {
 	ping: require("./commands/ping"),
