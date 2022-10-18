@@ -2,6 +2,8 @@ import "colors";
 import "dotenv/config";
 import { Client, Interaction, InteractionType } from "discord.js";
 
+import Global from "./types/Global";
+
 const commands: any = {
 	ping: require("./commands/ping"),
 	join: require("./commands/join"),
@@ -13,7 +15,7 @@ const client: Client = new Client({
 	intents: ["GuildMembers", "GuildVoiceStates"],
 });
 
-let global: any = {};
+let global: Global = { connection: undefined };
 
 client.on("ready", () => {
 	console.log("Logged in as", client.user?.tag.cyan);
