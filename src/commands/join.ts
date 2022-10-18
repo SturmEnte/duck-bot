@@ -1,29 +1,19 @@
 import { CommandInteraction } from "discord.js";
-import { joinVoiceChannel } from "@discordjs/voice";
 
-module.exports.init = () => {};
+import joinChannel from "../utility/joinChannel";
+
+let global: any;
+
+module.exports.init = (g: any) => {
+	global = g;
+};
 
 module.exports.execute = async (interaction: CommandInteraction) => {
-	const member = await interaction.guild?.members.fetch({
-		user: interaction.user,
-		force: true,
-	});
+	let connection = await joinChannel(interaction);
 
-	if (!interaction.guild) {
-		interaction.reply("The music commands only work in guilds");
-		return;
-	}
+	if (!connection) return;
 
-	if (!member?.voice.channelId) {
-		interaction.reply("You need to be in a channel to use this command");
-		return;
-	}
-
-	joinVoiceChannel({
-		guildId: String(interaction.guild.id),
-		channelId: String(member.voice.channelId),
-		adapterCreator: interaction.guild.voiceAdapterCreator,
-	});
+	global.connection = connection;
 
 	interaction.reply("Joined voice channel");
 };
