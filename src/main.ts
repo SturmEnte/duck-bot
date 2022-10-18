@@ -6,6 +6,7 @@ const commands: any = {
 	ping: require("./commands/ping"),
 	join: require("./commands/join"),
 	play: require("./commands/play"),
+	stop: require("./commands/stop"),
 };
 
 const client: Client = new Client({
