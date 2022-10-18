@@ -1,4 +1,4 @@
-module.exports.init = () => {};
+module.exports.init = (g) => {};
 
 module.exports.execute = (interaction) => {
 	interaction.reply("Pong");

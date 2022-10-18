@@ -5,18 +5,21 @@ import { Client, Interaction, InteractionType } from "discord.js";
 const commands: any = {
 	ping: require("./commands/ping"),
 	join: require("./commands/join"),
+	play: require("./commands/play"),
 };
 
 const client: Client = new Client({
 	intents: ["GuildMembers", "GuildVoiceStates"],
 });
 
+let global: any = {};
+
 client.on("ready", () => {
 	console.log("Logged in as", client.user?.tag.cyan);
 
 	// Register Commands
 	for (const key in commands) {
-		commands[key].init();
+		commands[key].init(global);
 		client.application?.commands.create(commands[key].command).then(() => {
 			console.log("Registered", commands[key].command.name.cyan, "command");
 		});

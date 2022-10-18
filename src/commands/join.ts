@@ -10,11 +10,8 @@ module.exports.init = (g: any) => {
 
 module.exports.execute = async (interaction: CommandInteraction) => {
 	let connection = await joinChannel(interaction);
-
 	if (!connection) return;
-
 	global.connection = connection;
-
 	interaction.reply("Joined voice channel");
 };
 
