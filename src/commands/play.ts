@@ -6,11 +6,11 @@ import Global from "../types/Global";
 
 let global: Global;
 
-module.exports.init = (g: Global) => {
+export function init(g: Global) {
 	global = g;
-};
+}
 
-module.exports.execute = async (interaction: CommandInteraction) => {
+export async function execute(interaction: CommandInteraction) {
 	if (!interaction.guildId) return;
 
 	if (!global.queueMangers.has(interaction.guildId)) {
@@ -29,7 +29,7 @@ module.exports.execute = async (interaction: CommandInteraction) => {
 	// global.connections.get(interaction.guildId)?.subscribe(player);
 
 	// interaction.reply(`Now playing ${file.name}`);
-};
+}
 
 export const command: ApplicationCommandData = {
 	name: "play",

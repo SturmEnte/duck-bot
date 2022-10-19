@@ -4,11 +4,11 @@ import Global from "../types/Global";
 
 let global: Global;
 
-module.exports.init = (g: Global) => {
+export function init(g: Global) {
 	global = g;
-};
+}
 
-module.exports.execute = async (interaction: CommandInteraction) => {
+export async function execute(interaction: CommandInteraction) {
 	if (!interaction.guildId) return;
 
 	// if (!global.connections.has(interaction.guildId)) {
@@ -19,9 +19,9 @@ module.exports.execute = async (interaction: CommandInteraction) => {
 	// global.connections.get(interaction.guildId)?.disconnect();
 	// global.connections.delete(interaction.guildId);
 	interaction.reply("Stoped playing");
-};
+}
 
-module.exports.command = {
+export const command = {
 	name: "stop",
 	description: "Stops playing and leaves the channel",
 };
