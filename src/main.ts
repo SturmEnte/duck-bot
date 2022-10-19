@@ -9,6 +9,8 @@ const commands: any = {
 	join: require("./commands/join"),
 	play: require("./commands/play"),
 	stop: require("./commands/stop"),
+	pause: require("./commands/pause"),
+	resume: require("./commands/resume"),
 };
 
 const client: Client = new Client({

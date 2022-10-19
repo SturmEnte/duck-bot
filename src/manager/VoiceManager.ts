@@ -6,6 +6,7 @@ import downloadFile from "../utility/downloadFile";
 export default class QueueManger {
 	public connection: VoiceConnection;
 	public currentlyPlaying: boolean;
+	public paused: boolean;
 
 	private player: AudioPlayer;
 	private channel: TextBasedChannel | undefined;
@@ -17,6 +18,7 @@ export default class QueueManger {
 		this.connection = connection;
 		this.currentlyPlaying = false;
 		this.connection.subscribe(this.player);
+		this.paused = false;
 
 		console.log(interaction);
 		interaction.guild?.channels.fetch(interaction.channelId).then((channel) => {
@@ -48,7 +50,23 @@ export default class QueueManger {
 		this.player.stop(true);
 	}
 
+	public pause() {
+		this.player.pause(true);
+		this.paused = true;
+	}
+
+	public resume() {
+		this.player.unpause();
+		this.paused = false;
+	}
+
 	private async play() {
+		if (this.paused == true) {
+			this.resume();
+			this.channel?.send("Resumed playing");
+			return;
+		}
+
 		if (this.queue.length == 0) {
 			this.currentlyPlaying = false;
 			this.channel?.send("The queue is empty");
