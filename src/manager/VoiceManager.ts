@@ -47,8 +47,8 @@ export default class QueueManger {
 		if (this.queue.length == 0) {
 			this.currentlyPlaying = false;
 			this.channel?.send("The queue is empty");
+			return;
 		}
-
 		const resource = createAudioResource(await downloadFile(this.queue[0].url));
 		this.player.play(resource);
 		this.player.on(AudioPlayerStatus.Idle, () => this.play());
