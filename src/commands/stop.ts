@@ -11,13 +11,13 @@ module.exports.init = (g: Global) => {
 module.exports.execute = async (interaction: CommandInteraction) => {
 	if (!interaction.guildId) return;
 
-	if (!global.connections.has(interaction.guildId)) {
-		interaction.reply("I'm not playing anything");
-		return;
-	}
+	// if (!global.connections.has(interaction.guildId)) {
+	// 	interaction.reply("I'm not playing anything");
+	// 	return;
+	// }
 
-	global.connections.get(interaction.guildId)?.disconnect();
-	global.connections.delete(interaction.guildId);
+	// global.connections.get(interaction.guildId)?.disconnect();
+	// global.connections.delete(interaction.guildId);
 	interaction.reply("Stoped playing");
 };
 

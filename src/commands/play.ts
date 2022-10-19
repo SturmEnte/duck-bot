@@ -1,7 +1,6 @@
-import { CommandInteraction, ApplicationCommandData, ApplicationCommandOptionType } from "discord.js";
-import { createAudioPlayer, createAudioResource } from "@discordjs/voice";
+import { CommandInteraction, ApplicationCommandData, ApplicationCommandOptionType, VoiceStateManager } from "discord.js";
 
-import downloadFile from "../utility/downloadFile";
+import VoiceManager from "../manager/VoiceManager";
 import joinChannel from "../utility/joinChannel";
 import Global from "../types/Global";
 
@@ -14,27 +13,22 @@ module.exports.init = (g: Global) => {
 module.exports.execute = async (interaction: CommandInteraction) => {
 	if (!interaction.guildId) return;
 
-	const file = interaction.options.get("file", true).attachment;
-
-	if (file?.contentType != "audio/mpeg") {
-		interaction.reply("Wrong file type");
-		return;
-	}
-
-	if (!global.connections.has(interaction.guildId)) {
+	if (!global.queueMangers.has(interaction.guildId)) {
 		const connection = await joinChannel(interaction);
 		if (!connection) return;
-		global.connections.set(interaction.guildId, connection);
+		global.queueMangers.set(interaction.guildId, new VoiceManager(interaction, connection));
 	}
 
-	const player = createAudioPlayer();
+	global.queueMangers.get(interaction.guildId)?.addToQueue(interaction);
 
-	const resource = createAudioResource(await downloadFile(file.url));
-	player.play(resource);
+	// const player = createAudioPlayer();
 
-	global.connections.get(interaction.guildId)?.subscribe(player);
+	// const resource = createAudioResource(await downloadFile(file.url));
+	// player.play(resource);
 
-	interaction.reply(`Now playing ${file.name}`);
+	// global.connections.get(interaction.guildId)?.subscribe(player);
+
+	// interaction.reply(`Now playing ${file.name}`);
 };
 
 export const command: ApplicationCommandData = {
