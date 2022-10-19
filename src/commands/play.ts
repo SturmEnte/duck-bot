@@ -20,15 +20,6 @@ export async function execute(interaction: CommandInteraction) {
 	}
 
 	global.queueMangers.get(interaction.guildId)?.addToQueue(interaction);
-
-	// const player = createAudioPlayer();
-
-	// const resource = createAudioResource(await downloadFile(file.url));
-	// player.play(resource);
-
-	// global.connections.get(interaction.guildId)?.subscribe(player);
-
-	// interaction.reply(`Now playing ${file.name}`);
 }
 
 export const command: ApplicationCommandData = {
