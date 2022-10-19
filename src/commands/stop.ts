@@ -11,17 +11,11 @@ export function init(g: Global) {
 export async function execute(interaction: CommandInteraction) {
 	if (!interaction.guildId) return;
 
-	// if (!global.connections.has(interaction.guildId)) {
-	// 	interaction.reply("I'm not playing anything");
-	// 	return;
-	// }
-
-	// global.connections.get(interaction.guildId)?.disconnect();
-	// global.connections.delete(interaction.guildId);
-	interaction.reply("Stoped playing");
+	global.queueMangers.get(interaction.guildId)?.stop();
+	interaction.reply("Stopped playing");
 }
 
 export const command = {
 	name: "stop",
-	description: "Stops playing and leaves the channel",
+	description: "Stops playing and clears the queue",
 };

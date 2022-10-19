@@ -43,6 +43,12 @@ export default class QueueManger {
 		interaction.reply(`Added ${file.name} to the queue`);
 	}
 
+	public stop() {
+		this.queue = [];
+		this.currentlyPlaying = false;
+		this.player.stop(true);
+	}
+
 	private async play() {
 		if (this.queue.length == 0) {
 			this.currentlyPlaying = false;
