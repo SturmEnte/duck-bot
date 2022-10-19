@@ -9,13 +9,15 @@ module.exports.init = (g: Global) => {
 };
 
 module.exports.execute = async (interaction: CommandInteraction) => {
-	if (!global.connection) {
+	if (!interaction.guildId) return;
+
+	if (!global.connection.has(interaction.guildId)) {
 		interaction.reply("I'm not playing anything");
 		return;
 	}
 
-	global.connection.disconnect();
-	global.connection = undefined;
+	global.connection.get(interaction.guildId)?.disconnect();
+	global.connection.delete(interaction.guildId);
 	interaction.reply("Stoped playing");
 };
 

@@ -3,14 +3,17 @@ import { createAudioPlayer, createAudioResource } from "@discordjs/voice";
 
 import downloadFile from "../utility/downloadFile";
 import joinChannel from "../utility/joinChannel";
+import Global from "../types/Global";
 
-let global: any;
+let global: Global;
 
-module.exports.init = (g: any) => {
+module.exports.init = (g: Global) => {
 	global = g;
 };
 
 module.exports.execute = async (interaction: CommandInteraction) => {
+	if (!interaction.guildId) return;
+
 	const file = interaction.options.get("file", true).attachment;
 
 	if (file?.contentType != "audio/mpeg") {
@@ -18,10 +21,10 @@ module.exports.execute = async (interaction: CommandInteraction) => {
 		return;
 	}
 
-	if (!global.connection) {
+	if (!global.connection.has(interaction.guildId)) {
 		const connection = await joinChannel(interaction);
 		if (!connection) return;
-		global.connection = connection;
+		global.connection.set(interaction.guildId, connection);
 	}
 
 	const player = createAudioPlayer();
@@ -29,7 +32,7 @@ module.exports.execute = async (interaction: CommandInteraction) => {
 	const resource = createAudioResource(await downloadFile(file.url));
 	player.play(resource);
 
-	global.connection.subscribe(player);
+	global.connection.get(interaction.guildId)?.subscribe(player);
 
 	interaction.reply(`Now playing ${file.name}`);
 };
