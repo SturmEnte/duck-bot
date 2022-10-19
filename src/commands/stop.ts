@@ -11,7 +11,7 @@ export function init(g: Global) {
 export async function execute(interaction: CommandInteraction) {
 	if (!interaction.guildId) return;
 
-	global.queueMangers.get(interaction.guildId)?.stop();
+	global.voiceMangers.get(interaction.guildId)?.stop();
 	interaction.reply("Stopped playing");
 }
 

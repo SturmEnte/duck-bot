@@ -15,7 +15,7 @@ const client: Client = new Client({
 	intents: ["GuildMembers", "GuildVoiceStates"],
 });
 
-let global: Global = { queueMangers: new Map() };
+let global: Global = { voiceMangers: new Map() };
 
 client.on("ready", () => {
 	console.log("Logged in as", client.user?.tag.cyan);

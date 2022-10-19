@@ -13,13 +13,13 @@ export function init(g: Global) {
 export async function execute(interaction: CommandInteraction) {
 	if (!interaction.guildId) return;
 
-	if (!global.queueMangers.has(interaction.guildId)) {
+	if (!global.voiceMangers.has(interaction.guildId)) {
 		const connection = await joinChannel(interaction);
 		if (!connection) return;
-		global.queueMangers.set(interaction.guildId, new VoiceManager(interaction, connection));
+		global.voiceMangers.set(interaction.guildId, new VoiceManager(interaction, connection));
 	}
 
-	global.queueMangers.get(interaction.guildId)?.addToQueue(interaction);
+	global.voiceMangers.get(interaction.guildId)?.addToQueue(interaction);
 }
 
 export const command: ApplicationCommandData = {
