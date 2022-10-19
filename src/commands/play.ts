@@ -21,10 +21,10 @@ module.exports.execute = async (interaction: CommandInteraction) => {
 		return;
 	}
 
-	if (!global.connection.has(interaction.guildId)) {
+	if (!global.connections.has(interaction.guildId)) {
 		const connection = await joinChannel(interaction);
 		if (!connection) return;
-		global.connection.set(interaction.guildId, connection);
+		global.connections.set(interaction.guildId, connection);
 	}
 
 	const player = createAudioPlayer();
@@ -32,7 +32,7 @@ module.exports.execute = async (interaction: CommandInteraction) => {
 	const resource = createAudioResource(await downloadFile(file.url));
 	player.play(resource);
 
-	global.connection.get(interaction.guildId)?.subscribe(player);
+	global.connections.get(interaction.guildId)?.subscribe(player);
 
 	interaction.reply(`Now playing ${file.name}`);
 };

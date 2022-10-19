@@ -1,5 +1,8 @@
 import { VoiceConnection } from "@discordjs/voice";
 
+import QueueManger from "../manager/QueueManager";
+
 export default interface Global {
-	connection: Map<string, VoiceConnection>;
+	connections: Map<string, VoiceConnection>;
+	queueMangers: Map<string, QueueManger>;
 }
