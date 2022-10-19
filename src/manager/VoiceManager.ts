@@ -5,12 +5,11 @@ import downloadFile from "../utility/downloadFile";
 
 export default class QueueManger {
 	public connection: VoiceConnection;
+	public currentlyPlaying: boolean;
 
 	private player: AudioPlayer;
 	private channel: TextBasedChannel | undefined;
 	private queue: Array<any>;
-
-	private currentlyPlaying: boolean;
 
 	constructor(interaction: CommandInteraction, connection: VoiceConnection) {
 		this.player = createAudioPlayer();
