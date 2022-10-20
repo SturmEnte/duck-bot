@@ -1,7 +1,6 @@
 import { AudioPlayer, VoiceConnection, createAudioPlayer, createAudioResource, AudioPlayerStatus } from "@discordjs/voice";
 import { CommandInteraction, TextBasedChannel } from "discord.js";
-
-import downloadFile from "../utility/downloadFile";
+import { stream } from "got";
 
 export default class QueueManger {
 	public connection: VoiceConnection;
@@ -20,7 +19,6 @@ export default class QueueManger {
 		this.connection.subscribe(this.player);
 		this.paused = false;
 
-		console.log(interaction);
 		interaction.guild?.channels.fetch(interaction.channelId).then((channel) => {
 			if (channel != null && channel?.isTextBased()) this.channel = channel;
 		});
@@ -72,7 +70,8 @@ export default class QueueManger {
 			this.channel?.send("The queue is empty");
 			return;
 		}
-		const resource = createAudioResource(await downloadFile(this.queue[0].url));
+
+		const resource = createAudioResource(stream(this.queue[0].url), { inlineVolume: true });
 		this.player.play(resource);
 		this.player.on(AudioPlayerStatus.Idle, () => this.play());
 		this.currentlyPlaying = true;
