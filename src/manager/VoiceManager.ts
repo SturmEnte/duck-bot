@@ -25,21 +25,39 @@ export default class QueueManger {
 	}
 
 	public addToQueue(interaction: CommandInteraction) {
-		const file = interaction.options.get("file", true).attachment;
+		if (interaction.options.get("file")) {
+			const file = interaction.options.get("file", true).attachment;
 
-		if (file?.contentType != "audio/mpeg") {
-			interaction.reply("Wrong file type");
+			if (file?.contentType != "audio/mpeg") {
+				interaction.reply("Wrong file type");
+				return;
+			}
+
+			this.queue.push({
+				name: file.name,
+				url: file.url,
+			});
+
+			if (!this.currentlyPlaying) this.play();
+
+			interaction.reply(`Added ${file.name} to the queue`);
 			return;
 		}
 
-		this.queue.push({
-			name: file.name,
-			url: file.url,
-		});
+		if (interaction.options.get("url")) {
+			const url = interaction.options.get("url")?.value;
+			this.queue.push({
+				name: url,
+				url,
+			});
 
-		if (!this.currentlyPlaying) this.play();
+			if (!this.currentlyPlaying) this.play();
 
-		interaction.reply(`Added ${file.name} to the queue`);
+			interaction.reply(`Added ${url} to the queue`);
+			return;
+		}
+
+		interaction.reply("Please enter either a file or a url to a file");
 	}
 
 	public stop() {
