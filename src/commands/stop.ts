@@ -23,4 +23,5 @@ export async function execute(interaction: CommandInteraction) {
 export const command = {
 	name: "stop",
 	description: "Stops playing and clears the queue",
+	dmPermission: false,
 };

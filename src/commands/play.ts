@@ -25,5 +25,6 @@ export async function execute(interaction: CommandInteraction) {
 export const command: ApplicationCommandData = {
 	name: "play",
 	description: "Play a music file",
+	dmPermission: false,
 	options: [{ name: "file", description: "The file to play", type: ApplicationCommandOptionType.Attachment, required: true }],
 };

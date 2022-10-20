@@ -27,4 +27,5 @@ export async function execute(interaction: CommandInteraction) {
 export const command = {
 	name: "join",
 	description: "Joins your current voice channel",
+	dmPermission: false,
 };

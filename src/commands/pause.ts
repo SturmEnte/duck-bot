@@ -24,4 +24,5 @@ export async function execute(interaction: CommandInteraction) {
 export const command = {
 	name: "pause",
 	description: "Pauses the playback",
+	dmPermission: false,
 };

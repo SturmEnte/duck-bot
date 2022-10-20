@@ -24,4 +24,5 @@ export async function execute(interaction: CommandInteraction) {
 export const command = {
 	name: "resume",
 	description: "Resumes the playback",
+	dmPermission: false,
 };
