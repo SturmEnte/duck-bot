@@ -2,7 +2,31 @@ import "dotenv/config";
 import { ApplicationCommandDataResolvable, ApplicationCommandOptionType, Client, InteractionType } from "discord.js";
 
 import Command from "./interfaces/Command";
+
+import rename from "./commands/rename";
+
 const commands: Command[] = [
+	{
+		run: rename,
+		data: {
+			name: "rename",
+			description: "Rename a user",
+			options: [
+				{
+					name: "user",
+					description: "The user you want to rename",
+					type: ApplicationCommandOptionType.User,
+					required: true,
+				},
+				{
+					name: "name",
+					description: "The new nickname",
+					type: ApplicationCommandOptionType.String,
+					required: true,
+				},
+			],
+		},
+	},
 ];
 
 const client: Client = new Client({
