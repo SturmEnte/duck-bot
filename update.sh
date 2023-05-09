@@ -1,12 +1,12 @@
 #! /bin/bash
-echo "Starting update"
-echo "Pull from GitHub"
+echo -e "\033[104mStarting update\033[0m"
+echo -e "\033[104mPull from GitHub\033[0m"
 git pull
-echo "Install npm packages"
+echo -e "\033[104mInstall npm packages\033[0m"
 npm i
-echo "Build application"
+echo -e "\033[104mBuild application\033[0m"
 npm run build
 cd build
-echo "Build Docker image"
+echo -e "\033[104mBuild Docker image\033[0m"
 docker build -t duck-bot .
-echo "Updated"
+echo -e "\033[104mUpdated\033[0m"
