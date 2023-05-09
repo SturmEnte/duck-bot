@@ -45,6 +45,7 @@ client.on("ready", () => {
 });
 
 client.on("interactionCreate", (interaction) => {
+	// Execute commands
 	if (interaction.type != InteractionType.ApplicationCommand) return;
 	commands.forEach(async (command) => {
 		if (command.data.name == interaction.command?.name) {
