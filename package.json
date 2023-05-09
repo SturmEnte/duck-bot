@@ -1,0 +1,17 @@
+{
+	"name": "duck-bot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/main.ts",
+	"scripts": {
+		"start": "node src/main.js",
+		"test": "nodemon src/main.ts"
+	},
+	"author": "SturmEnte",
+	"license": "GPL-3.0-only",
+	"devDependencies": {
+		"nodemon": "^2.0.22",
+		"ts-node": "^10.9.1",
+		"typescript": "^5.0.4"
+	}
+}
