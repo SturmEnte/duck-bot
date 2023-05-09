@@ -19,4 +19,14 @@ client.on("ready", () => {
 	});
 	client.application?.commands.set(cmds);
 });
+
+client.on("interactionCreate", (interaction) => {
+	if (interaction.type != InteractionType.ApplicationCommand) return;
+	commands.forEach((command) => {
+		if (command.data.name == interaction.command?.name) {
+			command.run(interaction);
+		}
+	});
+});
+
 client.login(process.env.TOKEN);
