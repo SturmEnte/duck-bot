@@ -53,7 +53,7 @@ client.on("interactionCreate", (interaction) => {
 				await command.run(interaction);
 			} catch (error) {
 				await interaction.reply("Error while executing command");
-				console.log("Error while executing", command.data.name, ":\n", error);
+				console.log("Error while executing", command.data.name, ":\n", error, "\n", interaction);
 			}
 		}
 	});
