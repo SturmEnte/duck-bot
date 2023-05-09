@@ -5,7 +5,8 @@
 	"main": "src/main.ts",
 	"scripts": {
 		"start": "node src/main.js",
-		"test": "nodemon src/main.ts"
+		"test": "nodemon src/main.ts",
+		"build": "tsc"
 	},
 	"author": "SturmEnte",
 	"license": "GPL-3.0-only",

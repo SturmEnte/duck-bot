@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"sourceRoot": "./src",
+		"outDir": "./build/src",
+		"inlineSourceMap": true,
+		"module": "NodeNext",
+		"removeComments": true
+	}
+}
