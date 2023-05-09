@@ -46,9 +46,14 @@ client.on("ready", () => {
 
 client.on("interactionCreate", (interaction) => {
 	if (interaction.type != InteractionType.ApplicationCommand) return;
-	commands.forEach((command) => {
+	commands.forEach(async (command) => {
 		if (command.data.name == interaction.command?.name) {
-			command.run(interaction);
+			try {
+				await command.run(interaction);
+			} catch (error) {
+				await interaction.reply("Error while executing command");
+				console.log("Error while executing", command.data.name, ":\n", error);
+			}
 		}
 	});
 });
