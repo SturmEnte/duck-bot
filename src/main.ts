@@ -19,7 +19,7 @@ const commands: Command[] = [
 					required: true,
 				},
 				{
-					name: "name",
+					name: "nickname",
 					description: "The new nickname",
 					type: ApplicationCommandOptionType.String,
 					required: true,
