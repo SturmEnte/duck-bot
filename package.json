@@ -10,8 +10,12 @@
 	"author": "SturmEnte",
 	"license": "GPL-3.0-only",
 	"devDependencies": {
+		"dotenv": "^16.0.3",
 		"nodemon": "^2.0.22",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4"
+	},
+	"dependencies": {
+		"discord.js": "^14.11.0"
 	}
 }
