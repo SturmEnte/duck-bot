@@ -6,12 +6,13 @@
 	"scripts": {
 		"start": "node src/main.js",
 		"test": "nodemon src/main.ts",
-		"build": "tsc"
+		"build": "gulp"
 	},
 	"author": "SturmEnte",
 	"license": "GPL-3.0-only",
 	"devDependencies": {
 		"dotenv": "^16.0.3",
+		"gulp": "^4.0.2",
 		"nodemon": "^2.0.22",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4"
