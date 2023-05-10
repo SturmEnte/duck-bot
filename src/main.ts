@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { ApplicationCommandDataResolvable, ApplicationCommandOptionType, Client, InteractionType } from "discord.js";
+import { ApplicationCommandDataResolvable, ApplicationCommandOptionType, Client, GuildMember, InteractionType, PartialGuildMember } from "discord.js";
 import { connect } from "mongoose";
 
 import Command from "./interfaces/Command";
@@ -104,7 +104,7 @@ client.on("guildMemberAdd", async (member) => {
 	messages.forEach(async (msg) => {
 		const channel = await member.guild.channels.fetch(msg.channel);
 		let message = msg.message;
-		message = message.replace(/{{user}}/g, member.user.username);
+		message = formatJoinLeaveMessage(message, member);
 		if (channel.isTextBased()) await channel.send(message);
 	});
 });
@@ -131,11 +131,16 @@ client.on("guildMemberRemove", async (member) => {
 	messages.forEach(async (msg) => {
 		const channel = await member.guild.channels.fetch(msg.channel);
 		let message = msg.message;
-		message = message.replace(/{{user}}/g, member.user.username);
+		message = formatJoinLeaveMessage(message, member);
 		if (channel.isTextBased()) await channel.send(message);
 	});
 });
 });
+
+function formatJoinLeaveMessage(message: string, member: GuildMember | PartialGuildMember): string {
+	let newMessage = message.replace(/{{user}}/g, member.user.username);
+	return newMessage;
+}
 
 client.login(process.env.TOKEN);
 connect(process.env.DB)
