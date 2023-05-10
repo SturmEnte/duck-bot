@@ -99,8 +99,6 @@ client.on("interactionCreate", (interaction) => {
 
 // Join-Leave messages
 client.on("guildMemberAdd", async (member) => {
-	console.log(member.user.username, "joined the server");
-
 	const messages = await JoinLeaveMessage.find({ guild: member.guild.id, type: "join" });
 
 	messages.forEach(async (msg) => {
@@ -111,8 +109,32 @@ client.on("guildMemberAdd", async (member) => {
 	});
 });
 
-client.on("guildMemberRemove", (member) => {
-	console.log(member.user.username, "left the server");
+client.on("guildMemberRemove", async (member) => {
+	let type: string;
+
+	const logs = await member.guild.fetchAuditLogs({ type: 20 });
+
+	const kickLog = logs.entries.first();
+	if (kickLog) {
+		const { target, createdTimestamp } = kickLog;
+		if (target.id === member.id && createdTimestamp > member.joinedTimestamp) {
+			type = "kick";
+		} else {
+			type = "leave";
+		}
+	} else {
+		type = "leave";
+	}
+
+	const messages = await JoinLeaveMessage.find({ guild: member.guild.id, type });
+
+	messages.forEach(async (msg) => {
+		const channel = await member.guild.channels.fetch(msg.channel);
+		let message = msg.message;
+		message = message.replace(/{{user}}/g, member.user.username);
+		if (channel.isTextBased()) await channel.send(message);
+	});
+});
 });
 
 client.login(process.env.TOKEN);
