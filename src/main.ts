@@ -4,6 +4,8 @@ import { connect } from "mongoose";
 
 import Command from "./interfaces/Command";
 
+import JoinLeaveMessage from "./models/JoinLeaveMessage";
+
 import rename from "./commands/rename";
 
 import createJoinLeaveMessage from "./commands/join-leave-message/create";
@@ -93,6 +95,24 @@ client.on("interactionCreate", (interaction) => {
 			}
 		}
 	});
+});
+
+// Join-Leave messages
+client.on("guildMemberAdd", async (member) => {
+	console.log(member.user.username, "joined the server");
+
+	const messages = await JoinLeaveMessage.find({ guild: member.guild.id, type: "join" });
+
+	messages.forEach(async (msg) => {
+		const channel = await member.guild.channels.fetch(msg.channel);
+		let message = msg.message;
+		message = message.replace(/{{user}}/g, member.user.username);
+		if (channel.isTextBased()) await channel.send(message);
+	});
+});
+
+client.on("guildMemberRemove", (member) => {
+	console.log(member.user.username, "left the server");
 });
 
 client.login(process.env.TOKEN);
