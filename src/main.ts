@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { ApplicationCommandDataResolvable, ApplicationCommandOptionType, Client, InteractionType } from "discord.js";
+import { connect } from "mongoose";
 
 import Command from "./interfaces/Command";
 
@@ -60,3 +61,9 @@ client.on("interactionCreate", (interaction) => {
 });
 
 client.login(process.env.TOKEN);
+connect(process.env.DB)
+	.then(() => console.log("Connected to the database"))
+	.catch((err) => {
+		console.log("Failed to connect to the database\n", err);
+		process.exit();
+	});

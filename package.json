@@ -18,6 +18,7 @@
 		"typescript": "^5.0.4"
 	},
 	"dependencies": {
-		"discord.js": "^14.11.0"
+		"discord.js": "^14.11.0",
+		"mongoose": "^7.1.0"
 	}
 }
