@@ -6,6 +6,8 @@ import Command from "./interfaces/Command";
 
 import rename from "./commands/rename";
 
+import createJoinLeaveMessage from "./commands/join-leave-message/create";
+
 const commands: Command[] = [
 	{
 		run: rename,
@@ -22,6 +24,39 @@ const commands: Command[] = [
 				{
 					name: "nickname",
 					description: "The new nickname",
+					type: ApplicationCommandOptionType.String,
+					required: true,
+				},
+			],
+		},
+	},
+	{
+		run: createJoinLeaveMessage,
+		data: {
+			name: "create-join-leave-message",
+			description: "Join messages",
+			options: [
+				{
+					name: "type",
+					description: "Join, Leave, Kick, Ban",
+					type: ApplicationCommandOptionType.String,
+					choices: [
+						{ name: "join", value: "join" },
+						{ name: "leave", value: "leave" },
+						{ name: "kick", value: "kick" },
+						{ name: "ban", value: "ban" },
+					],
+					required: true,
+				},
+				{
+					name: "channel",
+					description: "The channel the message should be send to",
+					type: ApplicationCommandOptionType.Channel,
+					required: true,
+				},
+				{
+					name: "message",
+					description: "{{user}} - username",
 					type: ApplicationCommandOptionType.String,
 					required: true,
 				},
