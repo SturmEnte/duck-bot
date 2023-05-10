@@ -110,8 +110,9 @@ client.on("guildMemberAdd", async (member) => {
 });
 
 client.on("guildMemberRemove", async (member) => {
-	let type: string;
+	let type = "leave";
 
+	// Check if kicked
 	const logs = await member.guild.fetchAuditLogs({ type: 20 });
 
 	const kickLog = logs.entries.first();
@@ -119,11 +120,14 @@ client.on("guildMemberRemove", async (member) => {
 		const { target, createdTimestamp } = kickLog;
 		if (target.id === member.id && createdTimestamp > member.joinedTimestamp) {
 			type = "kick";
-		} else {
-			type = "leave";
 		}
-	} else {
-		type = "leave";
+	}
+
+	// Check if banned
+	const banList = await member.guild.bans.fetch();
+	const bannedUser = banList.find((ban) => ban.user.id === member.id);
+	if (bannedUser) {
+		type = "ban";
 	}
 
 	const messages = await JoinLeaveMessage.find({ guild: member.guild.id, type });
@@ -134,7 +138,6 @@ client.on("guildMemberRemove", async (member) => {
 		message = formatJoinLeaveMessage(message, member);
 		if (channel.isTextBased()) await channel.send(message);
 	});
-});
 });
 
 function formatJoinLeaveMessage(message: string, member: GuildMember | PartialGuildMember): string {
