@@ -34,7 +34,7 @@ export default async function (interaction: CommandInteraction) {
 			try {
 				const member = await interaction.guild.members.fetch(id);
 				member
-					.kick()
+					.kick("Silently banned")
 					.then(async () => {
 						await interaction.reply("Succesfully banned member");
 					})
