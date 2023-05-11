@@ -104,9 +104,22 @@ client.on("ready", () => {
 	client.application?.commands.set(cmds);
 });
 
-client.on("interactionCreate", (interaction) => {
+client.on("interactionCreate", async (interaction) => {
 	// Execute commands
 	if (interaction.type != InteractionType.ApplicationCommand) return;
+
+	// Check if executor has admin permissions
+	try {
+		const member = await interaction.guild.members.fetch((interaction.member as GuildMember).id);
+		if (!member.permissions.has("Administrator")) {
+			await interaction.reply("You are not allowed to use this command");
+			return;
+		}
+	} catch (err) {
+		await interaction.reply("Failed to verify your permissions");
+		return;
+	}
+
 	commands.forEach(async (command) => {
 		if (command.data.name == interaction.command?.name) {
 			try {
