@@ -17,11 +17,14 @@ client.on("ready", () => {
 	joinLeave(client);
 
 	// Load commands
+	console.log("--- Commands ---");
 	let cmds: ApplicationCommandDataResolvable[] = [];
 	commands.forEach((command) => {
 		cmds.push(command.data);
+		console.log(command.data.name);
 	});
 	client.application?.commands.set(cmds);
+	console.log("----------------");
 });
 
 client.on("interactionCreate", async (interaction) => {
