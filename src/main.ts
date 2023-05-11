@@ -5,6 +5,7 @@ import { connect } from "mongoose";
 import Command from "./interfaces/Command";
 
 import JoinLeaveMessage from "./models/JoinLeaveMessage";
+import SilentBan from "./models/SilentBan";
 
 import rename from "./commands/rename";
 
@@ -120,6 +121,11 @@ client.on("interactionCreate", (interaction) => {
 
 // Join-Leave messages
 client.on("guildMemberAdd", async (member) => {
+	if (await SilentBan.exists({ guild: member.guild.id, user: member.user.id })) {
+		await member.kick("Silently banned");
+		return;
+	}
+
 	const messages = await JoinLeaveMessage.find({ guild: member.guild.id, type: "join" });
 
 	messages.forEach(async (msg) => {
@@ -131,6 +137,11 @@ client.on("guildMemberAdd", async (member) => {
 });
 
 client.on("guildMemberRemove", async (member) => {
+	if (await SilentBan.exists({ guild: member.guild.id, user: member.user.id })) {
+		await member.kick("Silently banned");
+		return;
+	}
+
 	let type = "leave";
 
 	// Check if kicked
