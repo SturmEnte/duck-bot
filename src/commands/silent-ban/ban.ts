@@ -19,6 +19,11 @@ export default async function (interaction: CommandInteraction) {
 		id = String(userId.value);
 	}
 
+	if (!id) {
+		await interaction.reply("No user id was found");
+		return;
+	}
+
 	if (id == interaction.client.user.id) {
 		await interaction.reply("I won't ban myself :wink:");
 		return;
