@@ -90,7 +90,7 @@ const commands: Command[] = [
 ];
 
 const client: Client = new Client({
-	intents: ["GuildMembers"],
+	intents: ["GuildMembers", "GuildModeration"],
 });
 
 client.on("ready", () => {
@@ -110,12 +110,13 @@ client.on("interactionCreate", async (interaction) => {
 
 	// Check if executor has admin permissions
 	try {
-		const member = await interaction.guild.members.fetch((interaction.member as GuildMember).id);
-		if (!member.permissions.has("Administrator")) {
+		let member = await (await interaction.guild.fetch()).members.fetch(interaction.user.id);
+		if (!member.permissions.has("Administrator", true)) {
 			await interaction.reply("You are not allowed to use this command");
 			return;
 		}
 	} catch (err) {
+		console.log("Failed to verify permissions for ", interaction.user.id + ":\n", err);
 		await interaction.reply("Failed to verify your permissions");
 		return;
 	}
