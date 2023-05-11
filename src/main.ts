@@ -10,6 +10,8 @@ import rename from "./commands/rename";
 
 import createJoinLeaveMessage from "./commands/join-leave-message/create";
 
+import silentBanBan from "./commands/silent-ban/ban";
+
 const commands: Command[] = [
 	{
 		run: rename,
@@ -61,6 +63,25 @@ const commands: Command[] = [
 					description: "{{user}} - username",
 					type: ApplicationCommandOptionType.String,
 					required: true,
+				},
+			],
+		},
+	},
+	{
+		run: silentBanBan,
+		data: {
+			name: "silent-ban",
+			description: "Silently ban a user",
+			options: [
+				{
+					name: "user",
+					description: "User that should be banned",
+					type: ApplicationCommandOptionType.User,
+				},
+				{
+					name: "user-id",
+					description: "Id of the user that should be banned",
+					type: ApplicationCommandOptionType.String,
 				},
 			],
 		},
