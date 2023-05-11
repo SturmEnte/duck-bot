@@ -24,6 +24,11 @@ export default async function (interaction: CommandInteraction) {
 		return;
 	}
 
+	if (await SilentBan.exists({ guild: interaction.guild, user: id })) {
+		await interaction.reply("User id already silently banned");
+		return;
+	}
+
 	SilentBan.create({
 		guild: interaction.guild.id,
 		user: id,
