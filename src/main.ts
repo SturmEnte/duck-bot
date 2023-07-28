@@ -6,6 +6,8 @@ import commands from "./commands";
 
 import joinLeave from "./listener/joinLeave";
 
+import web from "./web";
+
 const client: Client = new Client({
 	intents: ["GuildMembers", "GuildModeration"],
 });
@@ -56,9 +58,13 @@ client.on("interactionCreate", async (interaction) => {
 	});
 });
 
-client.login(process.env.TOKEN);
 connect(process.env.DB)
-	.then(() => console.log("Connected to the database"))
+	.then(() => {
+		console.log("Connected to the database");
+		client.login(process.env.TOKEN).then(() => {
+			web(client);
+		});
+	})
 	.catch((err) => {
 		console.log("Failed to connect to the database\n", err);
 		process.exit();
