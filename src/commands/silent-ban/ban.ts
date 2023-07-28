@@ -7,6 +7,9 @@ export default async function (interaction: CommandInteraction) {
 	const userId = interaction.options.get("user-id");
 
 	if (!user && !userId) {
+		console.log(interaction.options.data);
+		console.log(user);
+		console.log(userId);
 		await interaction.reply("A user or user id is required");
 		return;
 	}
