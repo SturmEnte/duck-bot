@@ -1,5 +1,6 @@
 import { Client } from "discord.js";
 import express, { Application } from "express";
+
 import cookieParser from "cookie-parser";
 
 import Token from "./models/Token";
@@ -17,6 +18,8 @@ function setup(newClient: Client) {
 import auth from "./web/auth";
 
 app.use(cookieParser());
+
+app.set("view engine", "ejs");
 
 app.use("/auth", auth);
 
@@ -42,6 +45,10 @@ app.all("*", async (req, res, next) => {
 	}
 
 	next();
+});
+
+app.get("/", (req, res) => {
+	res.render("guilds");
 });
 
 app.all("*", (req, res) => {
