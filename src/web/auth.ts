@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 	const authResponse = await axios.post("https://discord.com/api/v10/oauth2/token", body);
 
 	if (!authResponse.data.refresh_token || !authResponse.data.access_token) {
-		res.status(500).send("Authorization failed");
+		res.status(500).send("Authorization failed. Error: \n" + authResponse.data.error);
 		console.log(authResponse.data);
 		return;
 	}
@@ -38,7 +38,7 @@ router.get("/", async (req, res) => {
 	});
 
 	if (!identifyReponse.data.id) {
-		res.status(500).send("Idendification failed");
+		res.status(500).send("Idendification failed. Error: \n" + identifyReponse.data.error);
 		console.log(identifyReponse.data);
 		return;
 	}
