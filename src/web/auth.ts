@@ -43,9 +43,14 @@ router.get("/", async (req, res) => {
 		return;
 	}
 
-	OAuth2.create({ refresh_token: authResponse.data.refresh_token, scope: authResponse.data.scope, user_id: identifyReponse.data.id });
-
-	const token = randomBytes(20).toString();
+	if (await OAuth2.exists({ user_id: identifyReponse.data.id })) {
+		await OAuth2.findOneAndUpdate(
+			{ user_id: identifyReponse.data.id },
+			{ refresh_token: authResponse.data.refresh_token, scope: authResponse.data.scope }
+		);
+	} else {
+		await OAuth2.create({ refresh_token: authResponse.data.refresh_token, scope: authResponse.data.scope, user_id: identifyReponse.data.id });
+	}
 	const token = randomBytes(20).toString("hex");
 
 	await Token.create({ token, user_id: identifyReponse.data.id });
