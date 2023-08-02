@@ -1,7 +1,9 @@
 import { Router } from "express";
 import axios from "axios";
+import { randomBytes } from "crypto";
 
 import OAuth2 from "../models/OAuth2";
+import Token from "../models/Token";
 
 const router: Router = Router();
 
@@ -23,8 +25,9 @@ router.get("/", async (req, res) => {
 
 	const authResponse = await axios.post("https://discord.com/api/v10/oauth2/token", body);
 
-	if (!authResponse.data.refresh_token || !authResponse.data.access_token || authResponse.data.scope != "identify guilds") {
+	if (!authResponse.data.refresh_token || !authResponse.data.access_token) {
 		res.status(500).send("Authorization failed");
+		console.log(authResponse.data);
 		return;
 	}
 
@@ -34,9 +37,19 @@ router.get("/", async (req, res) => {
 		},
 	});
 
+	if (!identifyReponse.data.id) {
+		res.status(500).send("Idendification failed");
+		console.log(identifyReponse.data);
+		return;
+	}
+
 	OAuth2.create({ refresh_token: authResponse.data.refresh_token, scope: authResponse.data.scope, user_id: identifyReponse.data.id });
 
-	res.cookie("refresh_token", authResponse.data.refresh_token);
+	const token = randomBytes(20).toString();
+
+	await Token.create({ token, user_id: identifyReponse.data.id });
+
+	res.cookie("token", token);
 	res.redirect("/");
 });
 
