@@ -11,6 +11,10 @@ function setup(newClient: Client) {
 	});
 }
 
+import auth from "./web/auth";
+
+app.use("/auth", auth);
+
 app.get("*", (req, res) => {
 	res.send(client.user.username);
 });
