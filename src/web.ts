@@ -21,8 +21,6 @@ app.use(cookieParser());
 app.use("/auth", auth);
 
 app.all("*", async (req, res, next) => {
-	console.log(req.cookies);
-
 	if (!req.cookies.token) {
 		if (req.url.includes("api")) {
 			res.status(401).json({ error: "No token" });
