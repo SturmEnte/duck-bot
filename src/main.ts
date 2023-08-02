@@ -15,6 +15,9 @@ const client: Client = new Client({
 client.on("ready", () => {
 	console.log("Logged in as", client.user?.tag);
 
+	// Start web server
+	web(client);
+
 	// Load listeners
 	joinLeave(client);
 
@@ -61,9 +64,7 @@ client.on("interactionCreate", async (interaction) => {
 connect(process.env.DB)
 	.then(() => {
 		console.log("Connected to the database");
-		client.login(process.env.TOKEN).then(() => {
-			web(client);
-		});
+		client.login(process.env.TOKEN);
 	})
 	.catch((err) => {
 		console.log("Failed to connect to the database\n", err);
