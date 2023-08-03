@@ -40,7 +40,7 @@ app.all("*", async (req, res, next) => {
 
 	if (!(await Token.exists({ token: req.cookies.token }))) {
 		if (req.url.includes("api")) {
-			res.status(401).json({ error: "Invalid token" });
+			res.status(401).json({ error: "Invalid token", oauth2_url: process.env.OAUTH2_URL });
 		} else {
 			res.redirect(process.env.OAUTH2_URL);
 		}
@@ -58,21 +58,25 @@ app.get("/", async (req, res) => {
 	});
 
 	if (!access_token) {
-		res.status(500).send("Failed to get access token");
+		res.render("error", { url: process.env.OAUTH2_URL, error: "Failed to get access token" });
 		return;
 	}
 
-	const userInfo = await getUserInfo(user_id, access_token);
+	const userInfo = await getUserInfo(user_id, access_token).catch((err) => {
+		console.log("Error while getting user info: \n", err);
+	});
 
 	if (!userInfo) {
-		res.status(500).send("Failed to get user info");
+		res.render("error", { url: process.env.OAUTH2_URL, error: "Failed to get user info" });
 		return;
 	}
 
-	let guilds: Array<any> | undefined = await getUserGuilds(user_id, access_token);
+	let guilds: Array<any> | undefined = await getUserGuilds(user_id, access_token).catch((err) => {
+		console.log("Error while getting user's guilds: \n", err);
+	});
 
 	if (!guilds) {
-		res.status(500).send("Failed to get guilds");
+		res.render("error", { url: process.env.OAUTH2_URL, error: "Failed to get guilds" });
 		return;
 	}
 
