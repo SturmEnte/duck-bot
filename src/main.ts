@@ -9,7 +9,7 @@ import joinLeave from "./listener/joinLeave";
 import web from "./web";
 
 const client: Client = new Client({
-	intents: ["GuildMembers", "GuildModeration"],
+	intents: ["GuildMembers", "GuildModeration", "Guilds"],
 });
 
 client.on("ready", () => {
