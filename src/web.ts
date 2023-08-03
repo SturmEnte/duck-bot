@@ -5,6 +5,10 @@ import cookieParser from "cookie-parser";
 
 import Token from "./models/Token";
 
+import accessTokenManager from "./utils/accessTokenManager";
+import getUserInfo from "./utils/getUserInfo";
+import getUserGuilds from "./utils/getUserGuilds";
+
 let client: Client;
 let app: Application = express();
 
@@ -47,8 +51,45 @@ app.all("*", async (req, res, next) => {
 	next();
 });
 
-app.get("/", (req, res) => {
-	res.render("guilds");
+app.get("/", async (req, res) => {
+	const user_id = (await Token.findOne({ token: req.cookies.token })).user_id;
+	const access_token = await accessTokenManager.getToken(user_id).catch((err) => {
+		console.log("Error while getting access token:\n", err);
+	});
+
+	if (!access_token) {
+		res.status(500).send("Failed to get access token");
+		return;
+	}
+
+	const userInfo = await getUserInfo(user_id, access_token);
+
+	if (!userInfo) {
+		res.status(500).send("Failed to get user info");
+		return;
+	}
+
+	let guilds: Array<any> | undefined = await getUserGuilds(user_id, access_token);
+
+	if (!guilds) {
+		res.status(500).send("Failed to get guilds");
+		return;
+	}
+
+	// Remove all guilds that the bot is not a member of
+	guilds = guilds.filter((guild) => {
+		if (client.guilds.cache.has(guild.id)) return true;
+		return false;
+	});
+
+	// Remove all guilds that the user is not an administrator on
+	guilds = guilds.filter((guild) => {
+		if ((guild.permissions & 0x8) == 8) return true;
+		console.log(guild.permissions);
+		return false;
+	});
+
+	res.render("guilds", { guilds, user: userInfo });
 });
 
 app.all("*", (req, res) => {
