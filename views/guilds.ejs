@@ -11,7 +11,7 @@
 		<br /><br />
 		<div id="guilds">
 			<% for(let i = 0; i < guilds.length; i++) { %>
-			<a href="test.com" class="guild">
+			<a href="/guild/<%= guilds[i].id %>" class="guild">
 				<img src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128" alt="" />
 				<span><%= guilds[i].name %></span>
 			</a>
