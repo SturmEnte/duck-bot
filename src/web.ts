@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import express, { Application } from "express";
-
+import path from "path";
 import cookieParser from "cookie-parser";
 
 import Token from "./models/Token";
@@ -8,6 +8,8 @@ import Token from "./models/Token";
 import accessTokenManager from "./utils/accessTokenManager";
 import getUserInfo from "./utils/getUserInfo";
 import getUserGuilds from "./utils/getUserGuilds";
+
+import auth from "./web/auth";
 
 let client: Client;
 let app: Application = express();
@@ -19,8 +21,7 @@ function setup(newClient: Client) {
 	});
 }
 
-import auth from "./web/auth";
-
+app.use(express.static(path.join(__dirname, "../", "public")));
 app.use(cookieParser());
 
 app.set("view engine", "ejs");

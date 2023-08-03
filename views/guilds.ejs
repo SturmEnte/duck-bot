@@ -4,15 +4,18 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>DuckBot | Guilds</title>
+		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
 		<div>Welcome back <b><%= user.global_name %></b>!</div>
 		<br /><br />
-		<% for(let i = 0; i < guilds.length; i++) { %>
-		<div>
-			<img src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128" alt="" />
-			<span><%= guilds[i].name %></span>
+		<div id="guilds">
+			<% for(let i = 0; i < guilds.length; i++) { %>
+			<a href="test.com" class="guild">
+				<img src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128" alt="" />
+				<span><%= guilds[i].name %></span>
+			</a>
+			<% } %>
 		</div>
-		<% } %>
 	</body>
 </html>
