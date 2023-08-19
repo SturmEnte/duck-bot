@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Duck Bot | Guild</title>
+	</head>
+	<body>
+		<img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png?size=128" alt="" />
+		<div><b><%= guild.name %></b></div>
+		<br /><br />
+		<% for(let i = 0; i < guild.members.length; i++){ %>
+
+		<div><%= guild.members[i].username %></div>
+
+		<% } %>
+	</body>
+</html>

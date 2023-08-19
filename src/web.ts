@@ -9,6 +9,7 @@ import AccessTokenManager from "./utils/accessTokenManager";
 
 import auth from "./web/auth";
 import guilds from "./web/guilds";
+import guild from "./web/guild";
 
 let client: Client;
 let app: Application = express();
@@ -50,6 +51,7 @@ function setup(newClient: Client) {
 	});
 
 	app.use("/", guilds(client, accessTokenManager));
+	app.use("/guild", guild(client, accessTokenManager));
 
 	app.all("*", (req, res) => {
 		res.status(404).send("Not found");
