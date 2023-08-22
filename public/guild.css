@@ -1,7 +1,29 @@
 .user img {
+	width: 64px;
+	height: 64px;
+}
+
+#guild img {
 	width: 128px;
 	height: 128px;
+}
+
+#guild img,
+.user img {
 	border-radius: 50%;
 	background: rgb(87, 87, 87);
 	margin-right: 5px;
+	border: 1px solid black;
+}
+
+#guild,
+.user {
+	border: 1px solid black;
+	margin-bottom: 5px;
+	padding: 2px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	text-decoration: none;
+	color: black;
 }
