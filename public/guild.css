@@ -1,0 +1,7 @@
+.user img {
+	width: 128px;
+	height: 128px;
+	border-radius: 50%;
+	background: rgb(87, 87, 87);
+	margin-right: 5px;
+}
