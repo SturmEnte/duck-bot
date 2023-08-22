@@ -26,7 +26,9 @@
 				<div><%= guild.members[i].username %></div>
 			</div>
 			<div class="buttons">
+				<% if ((Number(guild.members[i].permissions) & 8) != 8) { %>
 				<img src="/icons/timeout.svg" title="Timeout" />
+				<% } %>
 			</div>
 		</div>
 		<% } %>
