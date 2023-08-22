@@ -18,11 +18,16 @@
 		<br /><br />
 		<% for(let i = 0; i < guild.members.length; i++){ %>
 		<div class="user" id="u<%= guild.members[i].id %>">
-			<img
-				src="https://cdn.discordapp.com/avatars/<%= guild.members[i].id %>/<%= guild.members[i].avatar %>.webp?size=128"
-				onerror="document.querySelector('#u<%= guild.members[i].id %> img').style.background = '#575757'"
-			/>
-			<div><%= guild.members[i].username %></div>
+			<div class="info">
+				<img
+					src="https://cdn.discordapp.com/avatars/<%= guild.members[i].id %>/<%= guild.members[i].avatar %>.webp?size=128"
+					onerror="document.querySelector('#u<%= guild.members[i].id %> img').style.background = '#575757'"
+				/>
+				<div><%= guild.members[i].username %></div>
+			</div>
+			<div class="buttons">
+				<img src="/icons/timeout.svg" title="Timeout" />
+			</div>
 		</div>
 		<% } %>
 	</body>

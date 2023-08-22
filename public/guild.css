@@ -9,7 +9,7 @@
 }
 
 #guild img,
-.user img {
+.user .info img {
 	border-radius: 50%;
 	margin-right: 5px;
 	border: 1px solid black;
@@ -20,9 +20,23 @@
 	border: 1px solid black;
 	margin-bottom: 5px;
 	padding: 2px;
+	text-decoration: none;
+	color: black;
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+#guild,
+.info {
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
-	text-decoration: none;
-	color: black;
+}
+
+.buttons * {
+	cursor: pointer;
 }
