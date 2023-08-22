@@ -12,8 +12,11 @@
 		<br /><br />
 		<div id="guilds">
 			<% for(let i = 0; i < guilds.length; i++) { %>
-			<a href="/guild/<%= guilds[i].id %>" class="guild">
-				<img src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128" alt="" />
+			<a href="/guild/<%= guilds[i].id %>" class="guild" id="g<%= guilds[i].id %>">
+				<img
+					src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128"
+					onerror="document.querySelector('#g<%= guilds[i].id %> img').style.background = '#575757'"
+				/>
 				<span><%= guilds[i].name %></span>
 			</a>
 			<% } %>
