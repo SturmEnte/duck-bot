@@ -38,7 +38,12 @@ router.get("/:guildId", async (req, res) => {
 		return;
 	}
 
-	console.log(req.params.guildId);
+	try {
+		await client.guilds.fetch(req.params.guildId);
+	} catch (error) {
+		res.render("error", { url: process.env.OAUTH2_URL, error: "Invalid guild id" });
+		return;
+	}
 
 	const rawGuild = await client.guilds.fetch(req.params.guildId);
 
