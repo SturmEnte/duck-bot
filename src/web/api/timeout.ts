@@ -19,6 +19,18 @@ export default function init(newClient: Client, newAccessTokenManager: AccessTok
 router.use(json());
 
 router.post("/", async (req, res) => {
+	if (!req.body.guild_id) {
+		res.status(400).json({ error: "No guild id" });
+	}
+
+	if (!req.body.user_id) {
+		res.status(400).json({ error: "No target user id" });
+	}
+
+	if (!req.body.duration) {
+		res.status(400).json({ error: "No duration" });
+	}
+
 	const user_id = (await Token.findOne({ token: req.cookies.token })).user_id;
 
 	try {
