@@ -11,6 +11,8 @@ import auth from "./web/auth";
 import guilds from "./web/guilds";
 import guild from "./web/guild";
 
+import timeout from "./web/api/timeout";
+
 let client: Client;
 let app: Application = express();
 
@@ -52,6 +54,8 @@ function setup(newClient: Client) {
 
 	app.use("/", guilds(client, accessTokenManager));
 	app.use("/guild", guild(client, accessTokenManager));
+
+	app.use("/api/timeout", timeout(client, accessTokenManager));
 
 	app.all("*", (req, res) => {
 		res.status(404).send("Not found");
