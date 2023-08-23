@@ -40,3 +40,17 @@
 .buttons * {
 	cursor: pointer;
 }
+
+body {
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 8px;
+	overflow: hidden;
+}
+
+#content {
+	width: calc(100vw - 2 * 8px);
+	height: calc(100vh - 2 * 8px);
+	overflow: auto;
+}
