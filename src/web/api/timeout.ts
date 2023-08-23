@@ -68,7 +68,7 @@ router.post("/", async (req, res) => {
 	}
 
 	if ((Number(targetMember.permissions.bitfield) & 8) == 8) {
-		res.status(400).json({ error: "Target is admin" });
+		res.status(400).json({ error: "Target is an admin" });
 		return;
 	}
 
