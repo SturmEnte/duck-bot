@@ -23,6 +23,11 @@ async function copy() {
 	await fs.copyFile("./LICENSE", "./build/LICENSE");
 }
 
+async function copyFolders() {
+	await gulp.src("./views/*", { base: "." }).pipe(gulp.dest("./build/"));
+	await gulp.src("./public/*", { base: "." }).pipe(gulp.dest("./build/"));
+}
+
 async function typescript() {
 	await new Promise((resolve, reject) => {
 		exec("tsc", (error, stdout, stderr) => {
@@ -35,5 +40,5 @@ async function typescript() {
 	});
 }
 
-var build = gulp.series(clean, gulp.parallel(copy, typescript));
+var build = gulp.series(clean, gulp.parallel(copy, copyFolders, typescript));
 exports.default = build;
