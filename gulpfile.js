@@ -24,8 +24,8 @@ async function copy() {
 }
 
 async function copyFolders() {
-	await gulp.src("./views/*", { base: "." }).pipe(gulp.dest("./build/"));
-	await gulp.src("./public/*", { base: "." }).pipe(gulp.dest("./build/"));
+	await gulp.src("./views/**", { base: "." }).pipe(gulp.dest("./build/"));
+	await gulp.src("./public/**", { base: "." }).pipe(gulp.dest("./build/"));
 }
 
 async function typescript() {
