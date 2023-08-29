@@ -9,6 +9,9 @@ import createJoinLeaveMessage from "./commands/join-leave-message/create";
 import silentBan from "./commands/silent-ban/ban";
 import silentUnban from "./commands/silent-ban/unban";
 
+import addChannelMessageKeeper from "./commands/message-keeper/addChannel";
+import removeChannelMessageKeeper from "./commands/message-keeper/removeChannel";
+
 const commands: Command[] = [
 	{
 		run: rename,
@@ -98,6 +101,36 @@ const commands: Command[] = [
 					name: "user-id",
 					description: "Id of the user that should be banned",
 					type: ApplicationCommandOptionType.String,
+				},
+			],
+		},
+	},
+	{
+		run: addChannelMessageKeeper,
+		data: {
+			name: "add-channel-message-keeper",
+			description: "Add a message keeper to a channel",
+			options: [
+				{
+					name: "channel",
+					description: "The channel",
+					type: ApplicationCommandOptionType.Channel,
+					required: true,
+				},
+			],
+		},
+	},
+	{
+		run: removeChannelMessageKeeper,
+		data: {
+			name: "remove-channel-message-keeper",
+			description: "Remove a message keeper from a channel",
+			options: [
+				{
+					name: "channel",
+					description: "The channel",
+					type: ApplicationCommandOptionType.Channel,
+					required: true,
 				},
 			],
 		},
