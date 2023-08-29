@@ -28,8 +28,10 @@ client.on("ready", () => {
 		cmds.push(command.data);
 		console.log(command.data.name);
 	});
-	client.application?.commands.set(cmds);
 	console.log("----------------");
+	client.application?.commands.set(cmds).then(() => {
+		console.log("Registered commands");
+	});
 });
 
 client.on("interactionCreate", async (interaction) => {
