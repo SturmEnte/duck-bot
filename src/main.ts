@@ -5,6 +5,7 @@ import { connect } from "mongoose";
 import commands from "./commands";
 
 import joinLeave from "./listener/joinLeave";
+import messages from "./listener/messages";
 
 import web from "./web";
 
@@ -20,6 +21,7 @@ client.on("ready", () => {
 
 	// Load listeners
 	joinLeave(client);
+	messages(client);
 
 	// Load commands
 	console.log("--- Commands ---");
