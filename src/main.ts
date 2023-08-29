@@ -10,7 +10,7 @@ import messages from "./listener/messages";
 import web from "./web";
 
 const client: Client = new Client({
-	intents: ["GuildMembers", "GuildModeration", "Guilds"],
+	intents: ["GuildMembers", "GuildModeration", "Guilds", "GuildMessages", "MessageContent"],
 });
 
 client.on("ready", () => {
