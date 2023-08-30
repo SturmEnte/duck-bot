@@ -1,4 +1,4 @@
-import { CategoryChannel, ChannelType, Client, GuildAuditLogs, GuildAuditLogsEntry, Message, OverwriteType } from "discord.js";
+import { CategoryChannel, ChannelType, Client, GuildAuditLogs, GuildAuditLogsEntry, GuildTextBasedChannel, Message, OverwriteType } from "discord.js";
 
 import MessageKeeper from "../models/MessageKeeper";
 
@@ -43,6 +43,18 @@ export default function (client: Client) {
 			});
 		}
 
-		console.log("Category:", category);
+		let channel: GuildTextBasedChannel = <GuildTextBasedChannel>(
+			category.children.cache.find((channel) => channel.name.toLowerCase() === message.channel.id && channel.type == ChannelType.GuildText)
+		);
+
+		if (!channel) {
+			channel = await category.children.create({
+				name: message.channel.id,
+				type: ChannelType.GuildText,
+				permissionOverwrites: [{ type: OverwriteType.Role, id: message.guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
+			});
+		}
+
+		console.log(channel);
 	});
 }
