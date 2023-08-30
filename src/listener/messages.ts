@@ -103,6 +103,43 @@ export default function (client: Client) {
 			files: [new AttachmentBuilder(Buffer.from(Buffer.from(message.content, "utf8").toString("hex")), { name: "content.txt" })],
 		});
 	});
+
+	client.on("messageUpdate", async (oldMessage, newMessage) => {
+		if (!(await MessageKeeper.exists({ guild: newMessage.guild.id, channel: newMessage.channel.id }))) {
+			return;
+		}
+
+		let category: CategoryChannel = <CategoryChannel>(
+			await newMessage.guild.channels.cache.find(
+				(channel) => channel.name.toLowerCase() === newMessage.guild.id && channel.type == ChannelType.GuildCategory
+			)
+		);
+
+		if (!category) {
+			category = await newMessage.guild.channels.create({
+				name: newMessage.guild.id,
+				type: ChannelType.GuildCategory,
+				permissionOverwrites: [{ type: OverwriteType.Role, id: newMessage.guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
+			});
+		}
+
+		let channel: GuildTextBasedChannel = <GuildTextBasedChannel>(
+			category.children.cache.find((channel) => channel.name.toLowerCase() === newMessage.channel.id && channel.type == ChannelType.GuildText)
+		);
+
+		if (!channel) {
+			channel = await category.children.create({
+				name: newMessage.channel.id,
+				type: ChannelType.GuildText,
+				permissionOverwrites: [{ type: OverwriteType.Role, id: newMessage.guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
+			});
+		}
+
+		await channel.send({
+			content: newMessage.id,
+			files: [new AttachmentBuilder(Buffer.from(Buffer.from(newMessage.content, "utf8").toString("hex")), { name: "content.txt" })],
+		});
+	});
 }
 
 async function getCachedMessageContent(channel: TextBasedChannel, targetMessage: PartialMessage): Promise<string | undefined> {
