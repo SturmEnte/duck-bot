@@ -1,4 +1,4 @@
-import { Client, GuildAuditLogs, GuildAuditLogsEntry, Message } from "discord.js";
+import { CategoryChannel, ChannelType, Client, GuildAuditLogs, GuildAuditLogsEntry, Message, OverwriteType } from "discord.js";
 
 import MessageKeeper from "../models/MessageKeeper";
 
@@ -24,5 +24,25 @@ export default function (client: Client) {
 		await message.channel.send(
 			`${entry.executor.toString()} deleted a message from ${entry.target.toString()}. Here is the message content:\n${message.content}`
 		);
+	});
+
+	client.on("messageCreate", async (message) => {
+		if (!(await MessageKeeper.exists({ guild: message.guild.id, channel: message.channel.id }))) {
+			return;
+		}
+
+		let category: CategoryChannel = <CategoryChannel>(
+			await message.guild.channels.cache.find((channel) => channel.name.toLowerCase() === message.guild.id && channel.type == ChannelType.GuildCategory)
+		);
+
+		if (!category) {
+			category = await message.guild.channels.create({
+				name: message.guild.id,
+				type: ChannelType.GuildCategory,
+				permissionOverwrites: [{ type: OverwriteType.Role, id: message.guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
+			});
+		}
+
+		console.log("Category:", category);
 	});
 }
