@@ -100,7 +100,7 @@ export default function (client: Client) {
 
 		await channel.send({
 			content: message.id,
-			files: [new AttachmentBuilder(Buffer.from(message.content), { name: "content.txt" })],
+			files: [new AttachmentBuilder(Buffer.from(Buffer.from(message.content, "utf8").toString("hex")), { name: "content.txt" })],
 		});
 	});
 }
@@ -124,7 +124,7 @@ async function getCachedMessageContent(channel: TextBasedChannel, targetMessage:
 				const attachment = message.attachments.find((attachment) => attachment.name == "content.txt");
 				if (attachment) {
 					const res = await axios({ url: attachment.url, method: "GET", responseType: "blob" });
-					content = res.data;
+					content = Buffer.from(res.data, "hex").toString("utf8");
 				}
 			}
 		}
