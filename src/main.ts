@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { ApplicationCommandDataResolvable, Client, InteractionType } from "discord.js";
+import { ApplicationCommandDataResolvable, Client, InteractionType, Partials } from "discord.js";
 import { connect } from "mongoose";
 
 import commands from "./commands";
@@ -11,6 +11,7 @@ import web from "./web";
 
 const client: Client = new Client({
 	intents: ["GuildMembers", "GuildModeration", "Guilds", "GuildMessages", "MessageContent"],
+	partials: [Partials.Message, Partials.GuildMember],
 });
 
 client.on("ready", () => {
