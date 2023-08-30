@@ -1,4 +1,17 @@
-import { CategoryChannel, ChannelType, Client, GuildTextBasedChannel, Message, OverwriteType, PartialMessage, TextBasedChannel } from "discord.js";
+import {
+	CategoryChannel,
+	ChannelType,
+	Client,
+	GuildTextBasedChannel,
+	Message,
+	OverwriteType,
+	PartialMessage,
+	TextBasedChannel,
+	Attachment,
+	AttachmentBuilder,
+} from "discord.js";
+
+import axios from "axios";
 
 import MessageKeeper from "../models/MessageKeeper";
 
@@ -79,7 +92,10 @@ export default function (client: Client) {
 			});
 		}
 
-		await channel.send(`${message.id}.${Buffer.from(message.content).toString("base64")}`);
+		await channel.send({
+			content: message.id,
+			files: [new AttachmentBuilder(Buffer.from(message.content), { name: "content.txt" })],
+		});
 	});
 }
 
@@ -89,22 +105,33 @@ async function getCachedMessageContent(channel: TextBasedChannel, targetMessage:
 	let options = {};
 
 	while (true) {
-		let messages = await channel.messages.fetch(options);
+		const messages = await channel.messages.fetch(options);
 
-		if (!messages) break;
+		if (!messages.last()) break;
 
-		messages.forEach((message: Message) => {
-			if (message.content.startsWith(targetMessage.id)) {
-				content = Buffer.from(message.content.split(".")[1], "base64").toString("utf8");
+		let keys = messages.keys();
+
+		for (let i = 0; i < messages.size; i++) {
+			const message = messages.get(keys.next().value);
+
+			if (message.content == targetMessage.id) {
+				console.log("Found message");
+				const attachment = message.attachments.find((attachment) => attachment.name == "content.txt");
+				if (attachment) {
+					console.log("Found attachment");
+					console.log(attachment.url);
+
+					const res = await axios({ url: attachment.url, method: "GET", responseType: "blob" });
+					console.log("Data:\n" + res.data);
+					content = res.data;
+				}
 			}
-		});
+		}
 
 		if (content) break;
 
 		options = { before: messages.last().id };
 	}
-
-	console.log(content);
 
 	return content;
 }
