@@ -55,6 +55,6 @@ export default function (client: Client) {
 			});
 		}
 
-		console.log(channel);
+		await channel.send(`${message.id}.${Buffer.from(message.content).toString("base64")}`);
 	});
 }
