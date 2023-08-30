@@ -58,9 +58,15 @@ export default function (client: Client) {
 			}
 		}
 
-		await message.channel.send(
-			`${entry.executor.toString()} deleted a message from ${entry.target.toString()}. Here is the message content:\n${message.content}`
-		);
+		const info = `${entry.executor.toString()} deleted a message from ${entry.target.toString()}. Here is the message content`;
+
+		if (message.content.length > 2000 - info.length - ":\n".length) {
+			await message.channel.send(info + " (next message):\n");
+			await message.channel.send(message.content);
+			return;
+		}
+
+		await message.channel.send(info + ":\n" + message.content);
 	});
 
 	client.on("messageCreate", async (message) => {
