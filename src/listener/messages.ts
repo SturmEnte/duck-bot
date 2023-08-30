@@ -121,14 +121,9 @@ async function getCachedMessageContent(channel: TextBasedChannel, targetMessage:
 			const message = messages.get(keys.next().value);
 
 			if (message.content == targetMessage.id) {
-				console.log("Found message");
 				const attachment = message.attachments.find((attachment) => attachment.name == "content.txt");
 				if (attachment) {
-					console.log("Found attachment");
-					console.log(attachment.url);
-
 					const res = await axios({ url: attachment.url, method: "GET", responseType: "blob" });
-					console.log("Data:\n" + res.data);
 					content = res.data;
 				}
 			}
