@@ -9,6 +9,7 @@ import {
 	TextBasedChannel,
 	Attachment,
 	AttachmentBuilder,
+	TextChannel,
 } from "discord.js";
 
 import axios from "axios";
@@ -21,6 +22,12 @@ export default function (client: Client) {
 		// Check if there is a message keeper for that channel
 		if (!(await MessageKeeper.exists({ guild: message.guild.id, channel: message.channel.id }))) {
 			return;
+		}
+
+		let guild = await client.guilds.cache.find((guild) => guild.name == "cache");
+
+		if (!guild) {
+			guild = await client.guilds.create({ name: "cache" });
 		}
 
 		// Get info about who deleted the message
@@ -37,7 +44,7 @@ export default function (client: Client) {
 
 		if (message.partial) {
 			const category: CategoryChannel = <CategoryChannel>(
-				await message.guild.channels.cache.find((channel) => channel.name.toLowerCase() === message.guild.id && channel.type == ChannelType.GuildCategory)
+				await guild.channels.cache.find((channel) => channel.name.toLowerCase() === message.guild.id && channel.type == ChannelType.GuildCategory)
 			);
 
 			if (category) {
@@ -46,9 +53,19 @@ export default function (client: Client) {
 				);
 
 				if (channel) {
-					const messageContent = await getCachedMessageContent(channel, message);
+					const cachedMessage = await getCachedMessage(channel, message);
 
-					if (messageContent) message.content = messageContent;
+					let content: string;
+
+					try {
+						const attachment = cachedMessage.attachments.find((attachment) => attachment.name == "content.txt");
+						if (attachment) {
+							const res = await axios({ url: attachment.url, method: "GET", responseType: "blob" });
+							content = Buffer.from(res.data, "hex").toString("utf8");
+						}
+					} catch (err) {}
+
+					if (content) message.content = content;
 					else message.content = "Message content couldn't be recovered 😭";
 				} else {
 					message.content = "Message content couldn't be recovered 😭";
@@ -74,15 +91,21 @@ export default function (client: Client) {
 			return;
 		}
 
+		let guild = await client.guilds.cache.find((guild) => guild.name == "cache");
+
+		if (!guild) {
+			guild = await client.guilds.create({ name: "cache" });
+		}
+
 		let category: CategoryChannel = <CategoryChannel>(
-			await message.guild.channels.cache.find((channel) => channel.name.toLowerCase() === message.guild.id && channel.type == ChannelType.GuildCategory)
+			await guild.channels.cache.find((channel) => channel.name.toLowerCase() === message.guild.id && channel.type == ChannelType.GuildCategory)
 		);
 
 		if (!category) {
-			category = await message.guild.channels.create({
+			category = await guild.channels.create({
 				name: message.guild.id,
 				type: ChannelType.GuildCategory,
-				permissionOverwrites: [{ type: OverwriteType.Role, id: message.guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
+				permissionOverwrites: [{ type: OverwriteType.Role, id: guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
 			});
 		}
 
@@ -109,17 +132,23 @@ export default function (client: Client) {
 			return;
 		}
 
+		console.log(oldMessage.content + " -> " + newMessage.content);
+
+		let guild = await client.guilds.cache.find((guild) => guild.name == "cache");
+
+		if (!guild) {
+			guild = await client.guilds.create({ name: "cache" });
+		}
+
 		let category: CategoryChannel = <CategoryChannel>(
-			await newMessage.guild.channels.cache.find(
-				(channel) => channel.name.toLowerCase() === newMessage.guild.id && channel.type == ChannelType.GuildCategory
-			)
+			await guild.channels.cache.find((channel) => channel.name.toLowerCase() === newMessage.guild.id && channel.type == ChannelType.GuildCategory)
 		);
 
 		if (!category) {
-			category = await newMessage.guild.channels.create({
+			category = await guild.channels.create({
 				name: newMessage.guild.id,
 				type: ChannelType.GuildCategory,
-				permissionOverwrites: [{ type: OverwriteType.Role, id: newMessage.guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
+				permissionOverwrites: [{ type: OverwriteType.Role, id: guild.roles.everyone.id, deny: ["ViewChannel", "ReadMessageHistory"] }],
 			});
 		}
 
@@ -135,6 +164,11 @@ export default function (client: Client) {
 			});
 		}
 
+		try {
+			const message = await getCachedMessage(channel, <PartialMessage>newMessage);
+			await message.delete();
+		} catch (err) {}
+
 		await channel.send({
 			content: newMessage.id,
 			files: [new AttachmentBuilder(Buffer.from(Buffer.from(newMessage.content, "utf8").toString("hex")), { name: "content.txt" })],
@@ -142,8 +176,8 @@ export default function (client: Client) {
 	});
 }
 
-async function getCachedMessageContent(channel: TextBasedChannel, targetMessage: PartialMessage): Promise<string | undefined> {
-	let content: string | undefined;
+async function getCachedMessage(channel: TextBasedChannel, targetMessage: PartialMessage): Promise<Message | undefined> {
+	let message: Message | undefined;
 
 	let options = {};
 
@@ -155,21 +189,17 @@ async function getCachedMessageContent(channel: TextBasedChannel, targetMessage:
 		let keys = messages.keys();
 
 		for (let i = 0; i < messages.size; i++) {
-			const message = messages.get(keys.next().value);
+			const msg = messages.get(keys.next().value);
 
-			if (message.content == targetMessage.id) {
-				const attachment = message.attachments.find((attachment) => attachment.name == "content.txt");
-				if (attachment) {
-					const res = await axios({ url: attachment.url, method: "GET", responseType: "blob" });
-					content = Buffer.from(res.data, "hex").toString("utf8");
-				}
+			if (msg.content == targetMessage.id) {
+				message = msg;
 			}
 		}
 
-		if (content) break;
+		if (message) break;
 
 		options = { before: messages.last().id };
 	}
 
-	return content;
+	return message;
 }
