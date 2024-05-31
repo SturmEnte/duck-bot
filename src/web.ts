@@ -62,7 +62,7 @@ function setup(newClient: Client) {
 	});
 
 	app.listen(process.env.PORT, () => {
-		console.log("Started web server");
+		console.log("Started web server on port " + process.env.PORT);
 	});
 }
 
