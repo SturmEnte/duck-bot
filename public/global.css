@@ -1,4 +1,11 @@
+:root {
+   --font: #eeeeee;
+   --back-prim: #686d76;
+   --back-sec: #373a40;
+   --accent: #dc5f00;
+}
+
 * {
-	font-family: Arial, Helvetica, sans-serif;
-	box-sizing: border-box;
+   font-family: Arial, Helvetica, sans-serif;
+   box-sizing: border-box;
 }
