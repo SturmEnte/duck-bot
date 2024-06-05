@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>DuckBot | Guilds</title>
-		<link rel="stylesheet" href="/global.css" />
-		<link rel="stylesheet" href="/guilds.css" />
-	</head>
-	<body>
-		<div>Welcome back <b><%= user.global_name %></b>!</div>
-		<br /><br />
-		<div id="guilds">
-			<% for(let i = 0; i < guilds.length; i++) { %>
-			<a href="/guild/<%= guilds[i].id %>" class="guild" id="g<%= guilds[i].id %>">
-				<img
-					src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128"
-					onerror="document.querySelector('#g<%= guilds[i].id %> img').style.background = '#575757'"
-				/>
-				<span><%= guilds[i].name %></span>
-			</a>
-			<% } %>
-		</div>
-	</body>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>DuckBot | Guilds</title>
+      <link rel="stylesheet" href="/global.css" />
+      <link rel="stylesheet" href="/guilds.css" />
+   </head>
+   <body>
+      <div>Welcome back <b><%= user.global_name %></b>!</div>
+      <br /><br />
+      <div id="guilds">
+         <% for(let i = 0; i < guilds.length; i++) { %>
+         <a href="/guild/<%= guilds[i].id %>" class="guild round-corners" id="g<%= guilds[i].id %>">
+            <img
+               src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128"
+               onerror="document.querySelector('#g<%= guilds[i].id %> img').style.background = '#575757'"
+            />
+            <span><%= guilds[i].name %></span>
+         </a>
+         <% } %>
+      </div>
+   </body>
 </html>
