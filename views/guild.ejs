@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Duck Bot | Guild</title>
-		<link rel="stylesheet" href="/global.css" />
-		<link rel="stylesheet" href="/guild.css" />
-	</head>
-	<body>
-		<div id="curtain" style="display: none">
-			<div id="timeout-popup" style="display: none">
-				<h1>Timeout</h1>
-				<label for="duration">Duration (in ms)</label>
-				<input type="number" id="timeout-duration" />
-				<button id="timeout-button">Timeout</button>
-			</div>
-		</div>
-		<div id="content">
-			<div id="guild">
-				<img
-					src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png?size=128"
-					onerror="document.querySelector('#guild img').style.background = '#575757'"
-				/>
-				<div><b><%= guild.name %></b></div>
-			</div>
-			<br /><br />
-			<div id="users">
-				<% for(let i = 0; i < guild.members.length; i++){ %>
-				<div class="user" id="u<%= guild.members[i].id %>">
-					<div class="info">
-						<img
-							src="https://cdn.discordapp.com/avatars/<%= guild.members[i].id %>/<%= guild.members[i].avatar %>.webp?size=128"
-							onerror="document.querySelector('#u<%= guild.members[i].id %> img').style.background = '#575757'"
-						/>
-						<div><%= guild.members[i].username %></div>
-					</div>
-					<div class="buttons">
-						<% if ((Number(guild.members[i].permissions) & 8) != 8) { %>
-						<img src="/icons/timeout.svg" title="Timeout" onclick="showTimeoutPopup('<%= guild.members[i].id %>')" />
-						<% } %>
-					</div>
-				</div>
-				<% } %>
-			</div>
-		</div>
-	</body>
-	<script src="/guild.js"></script>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Duck Bot | Guild</title>
+      <link rel="stylesheet" href="/global.css" />
+      <link rel="stylesheet" href="/guild.css" />
+   </head>
+   <body>
+      <div id="curtain" style="display: none">
+         <div id="timeout-popup" style="display: none">
+            <h1>Timeout</h1>
+            <label for="duration">Duration (in ms)</label>
+            <input type="number" id="timeout-duration" />
+            <button id="timeout-button">Timeout</button>
+         </div>
+      </div>
+      <div id="content">
+         <div id="guild" class="round-corners">
+            <img
+               src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png?size=128"
+               onerror="document.querySelector('#guild img').style.background = '#575757'"
+            />
+            <div><b><%= guild.name %></b></div>
+         </div>
+         <br /><br />
+         <div id="users">
+            <% for(let i = 0; i < guild.members.length; i++){ %>
+            <div class="user round-corners" id="u<%= guild.members[i].id %>">
+               <div class="info">
+                  <img
+                     src="https://cdn.discordapp.com/avatars/<%= guild.members[i].id %>/<%= guild.members[i].avatar %>.webp?size=128"
+                     onerror="document.querySelector('#u<%= guild.members[i].id %> img').style.background = '#575757'"
+                  />
+                  <div><%= guild.members[i].username %></div>
+               </div>
+               <div class="buttons">
+                  <% if ((Number(guild.members[i].permissions) & 8) != 8) { %>
+                  <img src="/icons/timeout.svg" title="Timeout" onclick="showTimeoutPopup('<%= guild.members[i].id %>')" />
+                  <% } %>
+               </div>
+            </div>
+            <% } %>
+         </div>
+      </div>
+   </body>
+   <script src="/guild.js"></script>
 </html>
