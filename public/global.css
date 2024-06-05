@@ -18,3 +18,9 @@ body {
 .round-corners {
    border-radius: 15px;
 }
+
+.title {
+   font-size: 3rem;
+   padding-left: 20px;
+   font-weight: 600;
+}
