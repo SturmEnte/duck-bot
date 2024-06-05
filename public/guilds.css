@@ -1,25 +1,25 @@
 #guilds {
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	flex-direction: column;
+   display: flex;
+   align-items: flex-start;
+   justify-content: flex-start;
+   flex-direction: column;
 }
 
 .guild {
-	border: 1px solid black;
-	margin-bottom: 5px;
-	padding: 2px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-decoration: none;
-	color: black;
+   border: 1px solid black;
+   margin-bottom: 5px;
+   padding: 2px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   text-decoration: none;
+   color: black;
 }
 
 .guild img {
-	width: 128px;
-	height: 128px;
-	border-radius: 50%;
-	margin-right: 5px;
-	border: 1px solid black;
+   width: 128px;
+   height: 128px;
+   border-radius: 50%;
+   margin-right: 5px;
+   border: 1px solid black;
 }
