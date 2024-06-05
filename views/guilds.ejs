@@ -8,7 +8,7 @@
       <link rel="stylesheet" href="/guilds.css" />
    </head>
    <body>
-      <div>Welcome back <b><%= user.global_name %></b>!</div>
+      <div class="title">Welcome back <span id="user-name"><%= user.global_name %></span>!</div>
       <br /><br />
       <div id="guilds">
          <% for(let i = 0; i < guilds.length; i++) { %>

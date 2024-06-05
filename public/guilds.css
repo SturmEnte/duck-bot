@@ -5,8 +5,12 @@
    flex-direction: column;
 }
 
+#user-name {
+   color: var(--accent);
+   text-decoration: underline;
+}
+
 .guild {
-   border: 1px solid black;
    margin-bottom: 5px;
    padding: 2px;
    display: flex;
@@ -14,6 +18,7 @@
    justify-content: center;
    text-decoration: none;
    color: black;
+   background: var(--back-sec);
 }
 
 .guild img {
@@ -21,5 +26,4 @@
    height: 128px;
    border-radius: 50%;
    margin-right: 5px;
-   border: 1px solid black;
 }
