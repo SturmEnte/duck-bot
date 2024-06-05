@@ -15,4 +15,6 @@ body {
    background: var(--back-prim);
 }
 
+.round-corners {
+   border-radius: 15px;
 }
