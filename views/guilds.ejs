@@ -10,14 +10,14 @@
    <body>
       <div class="title">Welcome back <span id="user-name"><%= user.global_name %></span>!</div>
       <br /><br />
-      <div id="guilds">
-         <% for(let i = 0; i < guilds.length; i++) { %>
-         <a href="/guild/<%= guilds[i].id %>" class="guild round-corners" id="g<%= guilds[i].id %>">
+      <div id="admin-guilds" class="guilds">
+         <% for(let i = 0; i < adminGuilds.length; i++) { %>
+         <a href="/guild/<%= adminGuilds[i].id %>" class="guild round-corners" id="g<%= adminGuilds[i].id %>">
             <img
-               src="https://cdn.discordapp.com/icons/<%= guilds[i].id %>/<%= guilds[i].icon %>.png?size=128"
-               onerror="document.querySelector('#g<%= guilds[i].id %> img').style.background = '#575757'"
+               src="https://cdn.discordapp.com/icons/<%= adminGuilds[i].id %>/<%= adminGuilds[i].icon %>.png?size=128"
+               onerror="document.querySelector('#g<%= adminGuilds[i].id %> img').style.background = '#575757'"
             />
-            <span><%= guilds[i].name %></span>
+            <span><%= adminGuilds[i].name %></span>
          </a>
          <% } %>
       </div>
