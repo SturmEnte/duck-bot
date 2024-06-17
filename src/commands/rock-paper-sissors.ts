@@ -61,6 +61,9 @@ export default async function (interaction: CommandInteraction) {
    } else if (selection == 2 && botSelection == 3) {
       // Sissors - Sissors
       result = RESULTS.draw;
+   } else {
+      interaction.reply("An error occurred while processing the input");
+      return;
    }
 
    result += ` I chose ${numberToRPS(botSelection)}.`;
