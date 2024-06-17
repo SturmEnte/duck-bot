@@ -145,7 +145,7 @@ const commands: Command[] = [
          options: [
             {
                name: "selection",
-               description: "The opion you chose",
+               description: "The option you chose",
                type: ApplicationCommandOptionType.String,
                choices: [
                   {
