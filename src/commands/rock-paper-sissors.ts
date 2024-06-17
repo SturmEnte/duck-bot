@@ -71,11 +71,11 @@ export default async function (interaction: CommandInteraction) {
 function numberToRPS(num) {
    switch (num) {
       case 1:
-         return "Rock";
+         return "🪨";
       case 2:
-         return "Paper";
+         return "📄";
       case 3:
-         return "Scissors";
+         return "✂️";
       default:
          return "Invalid input"; // handle cases where input is not 1, 2, or 3
    }

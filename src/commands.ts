@@ -149,15 +149,15 @@ const commands: Command[] = [
                type: ApplicationCommandOptionType.String,
                choices: [
                   {
-                     name: "Rock",
+                     name: "🪨",
                      value: "1",
                   },
                   {
-                     name: "Paper",
+                     name: "📄",
                      value: "2",
                   },
                   {
-                     name: "Sissors",
+                     name: "✂️",
                      value: "3",
                   },
                ],
