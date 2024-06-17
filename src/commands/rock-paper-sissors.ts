@@ -1,5 +1,5 @@
 /*
-This command is used to start a game of rock-paper-sissors
+With this command you can play a game of rock-paper-sissors
 */
 
 import { CommandInteraction } from "discord.js";
