@@ -12,7 +12,7 @@ import silentUnban from "./commands/silent-ban/unban";
 import addChannelMessageKeeper from "./commands/message-keeper/addChannel";
 import removeChannelMessageKeeper from "./commands/message-keeper/removeChannel";
 
-import rockPaperSissors from "./commands/rock-paper-sissors";
+import rockPaperScissors from "./commands/rock-paper-scissors";
 
 const commands: Command[] = [
    {
@@ -138,10 +138,10 @@ const commands: Command[] = [
       },
    },
    {
-      run: rockPaperSissors,
+      run: rockPaperScissors,
       data: {
-         name: "rock-paper-sissors",
-         description: "Play rock-paper-sissors with me",
+         name: "rock-paper-scissors",
+         description: "Play rock-paper-scissors with me",
          options: [
             {
                name: "selection",

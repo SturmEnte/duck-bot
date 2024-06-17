@@ -1,5 +1,5 @@
 /*
-With this command you can play a game of rock-paper-sissors
+With this command you can play a game of rock-paper-scissors
 */
 
 import { CommandInteraction } from "discord.js";
@@ -15,19 +15,19 @@ export default async function (interaction: CommandInteraction) {
    const rawSelection = interaction.options.get("selection", true);
 
    if (!rawSelection || !rawSelection.value) {
-      await interaction.reply("You didn't choose rock, paper or sissors");
+      await interaction.reply("You didn't choose rock, paper or scissors");
       return;
    }
 
    // Rock: 1
    // Paper: 2
-   // Sissors: 3
+   // Scissors: 3
 
    const selection: number = Number(rawSelection.value);
 
    if (selection === undefined || Number.isNaN(selection)) {
       await interaction.reply("Something went wrong. Your input was invalid.");
-      console.error("Invalid rock-paper-sissors selection.", rawSelection, selection);
+      console.error("Invalid rock-paper-scissors selection.", rawSelection, selection);
    }
 
    const botSelection = getRandomNumber(1, 3);
@@ -41,7 +41,7 @@ export default async function (interaction: CommandInteraction) {
       // Rock - Paper
       result = RESULTS.lost;
    } else if (selection == 1 && botSelection == 3) {
-      // Rock - Sissors
+      // Rock - Scissors
       result = RESULTS.won;
    } else if (selection == 2 && botSelection == 1) {
       // Paper - Rock
@@ -50,16 +50,16 @@ export default async function (interaction: CommandInteraction) {
       // Paper - Paper
       result = RESULTS.draw;
    } else if (selection == 2 && botSelection == 3) {
-      // Paper - Sissors
+      // Paper - Scissors
       result = RESULTS.lost;
    } else if (selection == 3 && botSelection == 1) {
-      // Sissors - Rock
+      // Scissors - Rock
       result = RESULTS.lost;
    } else if (selection == 3 && botSelection == 2) {
-      // Sissors - Paper
+      // Scissors - Paper
       result = RESULTS.won;
    } else if (selection == 3 && botSelection == 3) {
-      // Sissors - Sissors
+      // Scissors - Sissors
       result = RESULTS.draw;
    } else {
       interaction.reply("An error occurred while processing the input");
@@ -80,6 +80,6 @@ function numberToRPS(num) {
       case 3:
          return "✂️";
       default:
-         return "Invalid input"; // handle cases where input is not 1, 2, or 3
+         return "Invalid input";
    }
 }
