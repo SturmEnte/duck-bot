@@ -150,15 +150,15 @@ const commands: Command[] = [
                choices: [
                   {
                      name: "Rock",
-                     value: "rock",
+                     value: "1",
                   },
                   {
                      name: "Paper",
-                     value: "paper",
+                     value: "2",
                   },
                   {
                      name: "Sissors",
-                     value: "sissors",
+                     value: "3",
                   },
                ],
                required: true,
