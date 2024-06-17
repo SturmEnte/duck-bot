@@ -52,13 +52,13 @@ export default async function (interaction: CommandInteraction) {
    } else if (selection == 2 && botSelection == 3) {
       // Paper - Sissors
       result = RESULTS.lost;
-   } else if (selection == 2 && botSelection == 1) {
+   } else if (selection == 3 && botSelection == 1) {
       // Sissors - Rock
       result = RESULTS.lost;
-   } else if (selection == 2 && botSelection == 2) {
+   } else if (selection == 3 && botSelection == 2) {
       // Sissors - Paper
       result = RESULTS.won;
-   } else if (selection == 2 && botSelection == 3) {
+   } else if (selection == 3 && botSelection == 3) {
       // Sissors - Sissors
       result = RESULTS.draw;
    } else {
