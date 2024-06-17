@@ -6,9 +6,9 @@ import { CommandInteraction } from "discord.js";
 import getRandomNumber from "../utils/randomNumber";
 
 const RESULTS = {
-   won: "You have won.",
-   draw: "We have a draw.",
-   lost: "You have lost.",
+   won: "You have won 😭",
+   draw: "We have a draw 😐",
+   lost: "You have lost 🥳",
 };
 
 export default async function (interaction: CommandInteraction) {
@@ -66,7 +66,7 @@ export default async function (interaction: CommandInteraction) {
       return;
    }
 
-   result += ` I chose ${numberToRPS(botSelection)}.`;
+   result += `\nI chose ${numberToRPS(botSelection)}`;
 
    await interaction.reply(result);
 }
