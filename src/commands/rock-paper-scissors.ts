@@ -32,41 +32,40 @@ export default async function (interaction: CommandInteraction) {
 
    const botSelection = getRandomNumber(1, 3);
 
-   let result: string;
+   // let result: string;
+   let result: string = `I chose ${numberToRPS(botSelection)}\n`;
 
    if (selection == 1 && botSelection == 1) {
       // Rock - Rock
-      result = RESULTS.draw;
+      result += RESULTS.draw;
    } else if (selection == 1 && botSelection == 2) {
       // Rock - Paper
-      result = RESULTS.lost;
+      result += RESULTS.lost;
    } else if (selection == 1 && botSelection == 3) {
       // Rock - Scissors
-      result = RESULTS.won;
+      result += RESULTS.won;
    } else if (selection == 2 && botSelection == 1) {
       // Paper - Rock
-      result = RESULTS.won;
+      result += RESULTS.won;
    } else if (selection == 2 && botSelection == 2) {
       // Paper - Paper
-      result = RESULTS.draw;
+      result += RESULTS.draw;
    } else if (selection == 2 && botSelection == 3) {
       // Paper - Scissors
-      result = RESULTS.lost;
+      result += RESULTS.lost;
    } else if (selection == 3 && botSelection == 1) {
       // Scissors - Rock
-      result = RESULTS.lost;
+      result += RESULTS.lost;
    } else if (selection == 3 && botSelection == 2) {
       // Scissors - Paper
-      result = RESULTS.won;
+      result += RESULTS.won;
    } else if (selection == 3 && botSelection == 3) {
       // Scissors - Sissors
-      result = RESULTS.draw;
+      result += RESULTS.draw;
    } else {
       interaction.reply("An error occurred while processing the input");
       return;
    }
-
-   result += `\nI chose ${numberToRPS(botSelection)}`;
 
    await interaction.reply(result);
 }
